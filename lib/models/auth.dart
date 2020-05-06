@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'http_exception.dart';
 
 class Auth with ChangeNotifier{
-  String _token,_userId;
+  String _token,_userId,_email;
   DateTime _expiryDate;
   Timer _authTimer;
   String _mess;
@@ -33,6 +33,10 @@ class Auth with ChangeNotifier{
     return _mess;
   }
 
+  String get email{
+    return _email;
+  }
+
   Future<void> signUp(String email, String password, String mess)async{
     const url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key= AIzaSyBQQU_3TSuSxjczM-BXA92JkoXfUWJ_xdM';
     try{
@@ -50,6 +54,7 @@ class Auth with ChangeNotifier{
       throw HttpException(responseData['error']['message']);
     }
     _token = responseData['idToken'];
+    _email = responseData['email'];
     _userId = responseData['localId'];
     _expiryDate = DateTime.now().add(Duration(
       seconds: int.parse(responseData['expiresIn'])
@@ -58,6 +63,7 @@ class Auth with ChangeNotifier{
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();
     final userData = json.encode({
+      'email': _email,
       'token': _token,
       'userId': _userId,
       'expiryDate': _expiryDate.toIso8601String(),
@@ -87,6 +93,7 @@ class Auth with ChangeNotifier{
       throw HttpException(responseData['error']['message']);
     }
     _token = responseData['idToken'];
+    _email = responseData['email'];
     _userId = responseData['localId'];
     _expiryDate = DateTime.now().add(Duration(
       seconds: int.parse(responseData['expiresIn'])
@@ -99,6 +106,7 @@ class Auth with ChangeNotifier{
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();
     final userData = json.encode({
+      'email': _email,
       'token': _token,
       'userId': _userId,
       'expiryDate': _expiryDate.toIso8601String(),
@@ -126,6 +134,7 @@ class Auth with ChangeNotifier{
     _token = data['token'];
     _userId = data['userId'];
     _mess = data['mess'];
+    _email = data['email'];
     _expiryDate = expiryDate;
     notifyListeners();
     autoLogout();
@@ -141,6 +150,7 @@ class Auth with ChangeNotifier{
       _authTimer=null;
     }
     _mess=null;
+    _email = null;
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();
     prefs.remove('userData');

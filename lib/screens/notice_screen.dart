@@ -36,9 +36,7 @@ class NoticeScreen extends StatelessWidget {
             )
           ),
           Padding(padding: EdgeInsets.only(top: 10)),
-          SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Container(
+            Container(
               margin: EdgeInsets.only(left:10,right:10),
               // decoration: BoxDecoration(
               //   border: Border.all(
@@ -50,7 +48,9 @@ class NoticeScreen extends StatelessWidget {
               child: FutureBuilder(
                 future: Provider.of<Notice>(context).getNotice(mess),
                 builder: (context, snapshot)=>snapshot.connectionState == ConnectionState.waiting ? 
-                Center(child: Text('Loading...',style: TextStyle(fontSize: 20),),) :
+                Container(
+                  height: 100,
+                  child: Center(child: Text('Loading...',style: TextStyle(fontSize: 20),),)) :
                  Padding(
                    padding: const EdgeInsets.only(right: 5,left: 5,top: 10,bottom: 10),
                    child: Center(
@@ -61,7 +61,6 @@ class NoticeScreen extends StatelessWidget {
                  ),
               )
             ),
-          ),
           Padding(padding: EdgeInsets.only(top: 10)),
           ],
         ),

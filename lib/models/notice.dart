@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 
 class Notice with ChangeNotifier{
-  String _message;
 
   Future<String> getNotice(String mess)async{
     int a=0;
