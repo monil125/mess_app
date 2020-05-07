@@ -22,17 +22,17 @@ class _CalenderState extends State<Calender> {
   List<DateTime> tempDate=[];
   var _isLoading = false;
   final TextStyle genStyle = TextStyle(color: Colors.grey, fontSize: 18.0);
-  @override
-  void didChangeDependencies() {
-    if(isInit){
-      final _user = Provider.of<Auth>(context,listen: false);
-      Provider.of<MealCancel>(context,listen: false).fetchCancelMeal(_user.mess, _user.email).then((onValue){
-        print('Meal fetched');        
-      });
-    }
-    isInit=false;
-    super.didChangeDependencies();
-  }
+  //@override
+  // void didChangeDependencies() {
+  //   if(isInit){
+  //     final _user = Provider.of<Auth>(context,listen: false);
+  //     Provider.of<MealCancel>(context,listen: false).fetchCancelMeal(_user.mess, _user.email).then((onValue){
+  //       print('Meal fetched');        
+  //     });
+  //   }
+  //   isInit=false;
+  //   super.didChangeDependencies();
+  // }
   Future<void> cancelIt()async{
     setState(() {
       _isLoading=true;

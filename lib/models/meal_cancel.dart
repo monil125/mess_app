@@ -58,32 +58,34 @@ class MealCancel with ChangeNotifier{
     final url = 'https://institutemess-a112a.firebaseio.com/Mess/Mess%$a/cancel_sheet/$newEmail.json';
     try{
       for(int i=0;i<mealItems.length;i++){
-      final response = await http.post(url,body: json.encode({
-        'Acceptance':mealItems[i].acceptance,
-        'b':mealItems[i].b,
-        'd':mealItems[i].d,
-        'l':mealItems[i].l,
-        'date':mealItems[i].date,
-        'diet':mealItems[i].diet,
-        'email':mealItems[i].email,
-        'name':mealItems[i].name,
-        'request_date':mealItems[i].requestDate
-      }));
-      //print(json.decode(response.body)['name']);
-      final tempItem = MealCancelItem(
-        acceptance: mealItems[i].acceptance,
-        b: mealItems[i].b,
-        l: mealItems[i].l,
-        d: mealItems[i].d,
-        date: mealItems[i].date,
-        diet: mealItems[i].diet,
-        email: mealItems[i].email,
-        id: json.decode(response.body)['name'],
-        name: mealItems[i].name,
-        requestDate: mealItems[i].requestDate
-      );
-      _items.add(tempItem);
-      //print(_items.length);
+      if(mealItems[i].diet!='0'){
+        final response = await http.post(url,body: json.encode({
+          'Acceptance':mealItems[i].acceptance,
+          'b':mealItems[i].b,
+          'd':mealItems[i].d,
+          'l':mealItems[i].l,
+          'date':mealItems[i].date,
+          'diet':mealItems[i].diet,
+          'email':mealItems[i].email,
+          'name':mealItems[i].name,
+          'request_date':mealItems[i].requestDate
+        }));
+        //print(json.decode(response.body)['name']);
+        final tempItem = MealCancelItem(
+          acceptance: mealItems[i].acceptance,
+          b: mealItems[i].b,
+          l: mealItems[i].l,
+          d: mealItems[i].d,
+          date: mealItems[i].date,
+          diet: mealItems[i].diet,
+          email: mealItems[i].email,
+          id: json.decode(response.body)['name'],
+          name: mealItems[i].name,
+          requestDate: mealItems[i].requestDate
+        );
+        _items.add(tempItem);
+        //print(_items.length);
+      }
     }
     notifyListeners();
     }catch(error){
@@ -107,22 +109,27 @@ class MealCancel with ChangeNotifier{
     try{
       for(int i=0;i<mealItems.length;i++){
         final j = _items.indexWhere((test)=>test.requestDate==mealItems[i].requestDate);
-        String id = _items[j].id; 
-        _items[j].b=mealItems[i].b;
-        _items[j].d=mealItems[i].d;
-        _items[j].l=mealItems[i].l;
-        _items[j].date=mealItems[i].date;
-        _items[j].diet=mealItems[i].diet;
-        //print(id);
-        var url = 'https://institutemess-a112a.firebaseio.com/Mess/Mess%$a/cancel_sheet/$newEmail/$id.json';
-        await http.patch(url,body: json.encode({
-        'Acceptance': '0',
-        'b':mealItems[i].b,
-        'd':mealItems[i].d,
-        'l':mealItems[i].l,
-        'date':mealItems[i].date,
-        'diet':mealItems[i].diet,
-        }));
+        if(_items[j].acceptance!='1'){
+          String id = _items[j].id; 
+          _items[j].b=mealItems[i].b;
+          _items[j].d=mealItems[i].d;
+          _items[j].l=mealItems[i].l;
+          _items[j].date=mealItems[i].date;
+          _items[j].diet=mealItems[i].diet;
+          //print(id);
+          var url = 'https://institutemess-a112a.firebaseio.com/Mess/Mess%$a/cancel_sheet/$newEmail/$id.json';
+          await http.patch(url,body: json.encode({
+            'Acceptance':mealItems[i].acceptance,
+            'b':mealItems[i].b,
+            'd':mealItems[i].d,
+            'l':mealItems[i].l,
+            'date':mealItems[i].date,
+            'diet':mealItems[i].diet,
+            'email':mealItems[i].email,
+            'name':mealItems[i].name,
+            'request_date':mealItems[i].requestDate
+          }));
+        }
       }
       notifyListeners();
     }catch(error){

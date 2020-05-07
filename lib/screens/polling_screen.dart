@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 class PollingScreen extends StatefulWidget {
   @override
   _PollingScreenState createState() => _PollingScreenState();
 }
 
 class _PollingScreenState extends State<PollingScreen> {
-  String mealType = 'Lunch';
-  DateTime currentDate = DateTime.now();
+  DateTime today = DateTime.now();
+  int hour = int.parse(DateFormat("HH").format(DateTime.now()));
   int selectRadio =  0;
+  String type='';
   @override
   Widget build(BuildContext context) {
+    //print(hour);
+    if(hour<12&&hour>6){type='Breakfast';}
+    else if(hour>12&&hour<20){type='Lunch';}
+    else{type='Dinner';}
     return Padding(
       padding: EdgeInsets.only(left:10,right: 10,top: 10,bottom: 10),
       child: Card(
@@ -27,7 +33,7 @@ class _PollingScreenState extends State<PollingScreen> {
               ),
               SizedBox(height: 10,),
               Center(child: Text(
-                'How was the $mealType ?\n     on 1/03/1999',
+                'How was the $type \n     on ${DateFormat("dd/MM").format(today)} ?',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.grey,
