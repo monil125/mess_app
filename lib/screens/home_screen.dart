@@ -23,15 +23,27 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Sattvik Mess'),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.red,Colors.blue[800]]
+              )
+            ),
+          ),
+          title:const Text('Sattvik Mess',style: TextStyle(
+            color: Colors.green,
+            fontWeight: FontWeight.bold,
+            fontSize: 23.0
+          ),),
           actions: <Widget>[
-            FlatButton(child: Text('Logout'),onPressed: (){
+            FlatButton(child: const Text('Logout'),onPressed: (){
               Provider.of<Auth>(context,listen: false).logOut();
               Navigator.of(context).pushReplacementNamed('/');
             },)
           ],
         ),
         drawer: AppDrawer(),
+        backgroundColor: Colors.white,
         body: ListView(
           children: <Widget>[
             // Card(

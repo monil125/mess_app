@@ -16,8 +16,8 @@ class AuthScreen extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color.fromRGBO(215, 117, 255, 1).withOpacity(0.5),
-                  Color.fromRGBO(255, 188, 117, 1).withOpacity(0.9)
+                  const Color.fromRGBO(215, 117, 255, 1).withOpacity(0.5),
+                  const Color.fromRGBO(255, 188, 117, 1).withOpacity(0.9)
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -242,6 +242,7 @@ class _AuthCardState extends State<AuthCard> {
                     padding: EdgeInsets.symmetric(horizontal: 30,vertical: 8),
                     color: Theme.of(context).primaryColor,
                   ),
+                  if(!_isLoading)
                   FlatButton(
                     child: Text('${_authMode == AuthMode.Login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
                     onPressed: _switchAuthMode,

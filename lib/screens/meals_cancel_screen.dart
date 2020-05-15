@@ -9,15 +9,15 @@ class MealsCancelScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cancel Meals'),
+        title:const Text('Cancel Meals'),
       ),
       drawer: AppDrawer(),
       body: ListView(
-        children: <Widget>[
-          Calender(),
-          PreviousCancelledMeals()
-        ],
-      ),
+          children: <Widget>[
+            Calender(),
+            PreviousCancelledMeals()
+          ],
+        ),
     );
   }
 }
