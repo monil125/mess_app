@@ -1,6 +1,8 @@
 # sattvik_mess
 
 A new Flutter project.
+Institute mess app having various features like meal cancellation and monthly bills etc.
+
 
 ## Getting Started
 
